@@ -4,10 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SignalRChatServerExample.Hubs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SignalRChatServerExample
 {
@@ -23,12 +19,12 @@ namespace SignalRChatServerExample
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddSignalR();
             services.AddCors(options => options.AddDefaultPolicy(policy => policy
             .AllowCredentials()
             .AllowAnyHeader()
             .AllowAnyMethod()
             .SetIsOriginAllowed(x => true)));
-            services.AddSignalR();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -44,6 +40,8 @@ namespace SignalRChatServerExample
 
             app.UseStaticFiles();
 
+            app.UseCors();
+            
             app.UseRouting();
 
             app.UseAuthorization();
